@@ -1,7 +1,12 @@
+import QueryProvider from "@/lib/query-provider";
 import "@/styles/globals.css";
+
+import "react-toastify/dist/ReactToastify.css";
 
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
+import { ToastContainer } from "react-toastify";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
   title: "Create T3 App",
@@ -18,8 +23,22 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${geist.variable}`}>
-      <body>{children}</body>
+    <html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
+      <body>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <QueryProvider>
+            <ToastContainer />
+            <div className="h-screen max-h-screen overflow-hidden">
+              {children}
+            </div>
+          </QueryProvider>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
