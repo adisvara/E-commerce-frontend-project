@@ -96,15 +96,15 @@ pnpm typecheck
 
 Follow the deployment guides for:
 
-* [Vercel](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
-* [Netlify](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
-* [Docker](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
+* [Vercel](https://create.t3.gg/en/deployment/vercel)
+* [Netlify](https://create.t3.gg/en/deployment/netlify)
+* [Docker](https://create.t3.gg/en/deployment/docker)
 
 ## Learn More
 
 To learn more about the technologies used in this project:
 
-* [Next.js Documentation](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
-* [Tailwind CSS Documentation](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
-* [React Query Documentation](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
-* [Zustand Documentation](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
+* [Next.js Documentation](https://nextjs.org/docs)
+* [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+* [React Query Documentation](https://tanstack.com/query/latest/docs/react)
+* [Zustand Documentation](https://docs.pmnd.rs/zustand/getting-started/introduction)
