@@ -1,29 +1,110 @@
-# Create T3 App
+# Kenome Frontend Task
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+This project is a frontend application built using the [T3 Stack](https://create.t3.gg/), which includes modern technologies like Next.js, Tailwind CSS, and TypeScript. It is bootstrapped with `create-t3-app`.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- **Next.js**: A React framework for building server-rendered and static web applications.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **TypeScript**: A strongly typed programming language that builds on JavaScript.
+- **Radix UI**: Accessible, unstyled UI components for building custom designs.
+- **React Query**: Powerful data-fetching and state management for React.
+- **Zustand**: A small, fast, and scalable state-management library.
+- **Prettier**: Code formatting with Tailwind CSS plugin.
+- **ESLint**: Linting for consistent and error-free code.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Getting Started
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+### Prerequisites
+
+Ensure you have the following installed:
+
+- Node.js (>= 18.0.0)
+- pnpm (>= 9.11.0)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone <repository-url>
+   cd kenome-fe-task
+   ```
+2. Install dependencies:
+
+   ```
+   pnpm install
+   ```
+3. Create a `.env` file by copying `.env.example`:
+
+   ```
+   cp .env.example .env
+   ```
+
+   Populate the [.env](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) file with the required environment variables.
+
+### Development
+
+To start the development server:
+
+```
+pnpm dev
+```
+
+The application will be available at [http://localhost:3000](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html).
+
+### Build
+
+To build the application for production:
+
+```
+pnpm build
+```
+
+### Linting and Formatting
+
+* Run ESLint:
+
+  ```
+  pnpm lint
+  ```
+* Fix linting issues:
+
+  ```
+  pnpm lint:fix
+  ```
+* Check code formatting:
+
+  ```
+  pnpm format:check
+  ```
+* Format code:
+
+  ```
+  pnpm format:write
+  ```
+
+### Type Checking
+
+To check for TypeScript errors:
+
+```
+pnpm typecheck
+```
+
+## Deployment
+
+Follow the deployment guides for:
+
+* [Vercel](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
+* [Netlify](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
+* [Docker](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
 
 ## Learn More
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+To learn more about the technologies used in this project:
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
-
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+* [Next.js Documentation](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
+* [Tailwind CSS Documentation](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
+* [React Query Documentation](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
+* [Zustand Documentation](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html)
