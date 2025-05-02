@@ -1,110 +1,97 @@
-# Kenome Frontend Task
+# Frontend Task: Product Table with API Integration, Zod Validation & Navigation
 
-This project is a frontend application built using the [T3 Stack](https://create.t3.gg/), which includes modern technologies like Next.js, Tailwind CSS, and TypeScript. It is bootstrapped with `create-t3-app`.
+## Objective
 
-## Features
+Enhance the existing Next.js boilerplate by integrating the [DummyJSON Products API](https://dummyjson.com/docs/products) into a data table. Implement full CRUD operations, pagination, sorting, form validation using Zod, routing with dynamic titles, and utilize **TanStack Query** for efficient data fetching and state management.
 
-- **Next.js**: A React framework for building server-rendered and static web applications.
-- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
-- **TypeScript**: A strongly typed programming language that builds on JavaScript.
-- **Radix UI**: Accessible, unstyled UI components for building custom designs.
-- **React Query**: Powerful data-fetching and state management for React.
-- **Zustand**: A small, fast, and scalable state-management library.
-- **Prettier**: Code formatting with Tailwind CSS plugin.
-- **ESLint**: Linting for consistent and error-free code.
+---
 
-## Getting Started
+## Requirements
 
-### Prerequisites
+### 1. Data Table Integration
 
-Ensure you have the following installed:
+- Fetch product data from `https://dummyjson.com/products` using **TanStack Query**.
+- Display the data in the existing table (data-table) component.
 
-- Node.js (>= 18.0.0)
-- pnpm (>= 9.11.0)
+### 2. Pagination
 
-### Installation
+- Implement pagination using the API's `limit` and `skip` query parameters.
+- Allow users to navigate through different pages of products.
 
-1. Clone the repository:
+### 3. Sorting
 
-   ```bash
-   git clone <repository-url>
-   cd kenome-fe-task
-   ```
-2. Install dependencies:
+- Enable sorting of products on the table based on fields like `title`, `price`, and `rating`.
+- Implement both ascending and descending order sorting.
 
-   ```
-   pnpm install
-   ```
-3. Create a `.env` file by copying `.env.example`:
+### 4. CRUD Functionality
 
-   ```
-   cp .env.example .env
-   ```
+- **Add Product**:
 
-   Populate the [.env](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html) file with the required environment variables.
+  - Create a form to add a new product.
+  - Use **Zod** with `react-hook-form` for form validation.
+  - Send a POST request to `https://dummyjson.com/products/add`.
+  - Upon successful addition, update the TanStack Query's cache to include the new product.
+- **Update Product**:
 
-### Development
+  - Allow editing of existing product details.
+  - Use **Zod** for validating the updated data.
+  - Send a PUT request to `https://dummyjson.com/products/{id}`.
+  - Reflect the changes in the TanStack Query's cache upon successful update.
+- **Delete Product**:
 
-To start the development server:
+  - Implement a delete functionality for each product.
+  - Send a DELETE request to `https://dummyjson.com/products/{id}`.
+  - Remove the product from the TanStack Query's cache upon successful deletion.
 
-```
-pnpm dev
-```
+### 5. Product Detail Page (View Page)
 
-The application will be available at [http://localhost:3000](vscode-file://vscode-app/Applications/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/code/electron-sandbox/workbench/workbench.html).
+- Clicking on a table row should navigate to a product view page at `/products/[id]`.
+- Fetch the product using `GET https://dummyjson.com/products/{id}`.
+- Display key information: title, price, description, brand, thumbnail, etc.
 
-### Build
+### 6. Dynamic Page Titles
 
-To build the application for production:
+- Use the product name (or relevant context) as the document `<title>` for each page.
+  - Example:
+    - `/products`: “All Products – MyShop”
+    - `/products/12`: “iPhone 9 – MyShop”
 
-```
-pnpm build
-```
+---
 
-### Linting and Formatting
+## Form Validation with Zod
 
-* Run ESLint:
+Use `zod` and `@hookform/resolvers/zod` for schema validation. Example schema:
 
-  ```
-  pnpm lint
-  ```
-* Fix linting issues:
+```typescript
+import { z } from 'zod';
 
-  ```
-  pnpm lint:fix
-  ```
-* Check code formatting:
-
-  ```
-  pnpm format:check
-  ```
-* Format code:
-
-  ```
-  pnpm format:write
-  ```
-
-### Type Checking
-
-To check for TypeScript errors:
-
-```
-pnpm typecheck
+export const productSchema = z.object({
+  username: z.string().min(1, { message: 'Username is required' }),
+  password: z.string().min(1, { message: 'Password is required' })
+});
 ```
 
-## Deployment
+Integrate this schema with `react-hook-form` to validate form inputs and display appropriate error messages.
 
-Follow the deployment guides for:
+---
 
-* [Vercel](https://create.t3.gg/en/deployment/vercel)
-* [Netlify](https://create.t3.gg/en/deployment/netlify)
-* [Docker](https://create.t3.gg/en/deployment/docker)
+## Evaluation Criteria
 
-## Learn More
+* **Functionality** : Correct implementation of data fetching, pagination, sorting, CRUD operations, and routing.
+* **Code Quality** : Clean, readable, and maintainable code.
+* **User Experience** : Intuitive and responsive UI/UX.
+* **Validation** : Effective use of Zod for form validation with appropriate error messages.
+* **State Management** : Efficient use of TanStack Query for data fetching and state management.
+* **Error Handling** : Proper handling of API errors and edge cases.
 
-To learn more about the technologies used in this project:
+---
 
-* [Next.js Documentation](https://nextjs.org/docs)
-* [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-* [React Query Documentation](https://tanstack.com/query/latest/docs/react)
-* [Zustand Documentation](https://docs.pmnd.rs/zustand/getting-started/introduction)
+## Submission Guidelines
+
+1. **Fork the Repository.**
+2. **Make Your Changes**
+3. **Push Changes and Create a Pull Request** :
+
+* Ensure the base repository is `QarbonaAI/fe-task` and the base branch is `main`.
+* Set the title of the pull request to your  **full name** .
+* Provide a brief description of the changes you've made.

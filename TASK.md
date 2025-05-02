@@ -11,7 +11,7 @@ Enhance the existing Next.js boilerplate by integrating the [DummyJSON Products 
 ### 1. Data Table Integration
 
 - Fetch product data from `https://dummyjson.com/products` using **TanStack Query**.
-- Display the data in the existing table component.
+- Display the data in the existing table (data-table) component.
 
 ### 2. Pagination
 
@@ -20,7 +20,7 @@ Enhance the existing Next.js boilerplate by integrating the [DummyJSON Products 
 
 ### 3. Sorting
 
-- Enable sorting of products based on fields like `title`, `price`, and `rating`.
+- Enable sorting of products on the table based on fields like `title`, `price`, and `rating`.
 - Implement both ascending and descending order sorting.
 
 ### 4. CRUD Functionality
@@ -30,18 +30,18 @@ Enhance the existing Next.js boilerplate by integrating the [DummyJSON Products 
   - Create a form to add a new product.
   - Use **Zod** with `react-hook-form` for form validation.
   - Send a POST request to `https://dummyjson.com/products/add`.
-  - Upon successful addition, update the table to include the new product.
+  - Upon successful addition, update the TanStack Query's cache to include the new product.
 - **Update Product**:
 
   - Allow editing of existing product details.
   - Use **Zod** for validating the updated data.
   - Send a PUT request to `https://dummyjson.com/products/{id}`.
-  - Reflect the changes in the table upon successful update.
+  - Reflect the changes in the TanStack Query's cache upon successful update.
 - **Delete Product**:
 
   - Implement a delete functionality for each product.
   - Send a DELETE request to `https://dummyjson.com/products/{id}`.
-  - Remove the product from the table upon successful deletion.
+  - Remove the product from the TanStack Query's cache upon successful deletion.
 
 ### 5. Product Detail Page (View Page)
 
