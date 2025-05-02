@@ -83,3 +83,15 @@ Integrate this schema with `react-hook-form` to validate form inputs and display
 * **Validation** : Effective use of Zod for form validation with appropriate error messages.
 * **State Management** : Efficient use of TanStack Query for data fetching and state management.
 * **Error Handling** : Proper handling of API errors and edge cases.
+
+---
+
+## Submission Guidelines
+
+1. **Fork the Repository.**
+2. **Make Your Changes**
+3. **Push Changes and Create a Pull Request** :
+
+* Ensure the base repository is `QarbonaAI/fe-task` and the base branch is `main`.
+* Set the title of the pull request to your  **full name** .
+* Provide a brief description of the changes you've made.
