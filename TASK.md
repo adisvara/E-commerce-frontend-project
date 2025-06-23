@@ -11,7 +11,8 @@ Enhance the existing Next.js boilerplate by integrating the [DummyJSON Products 
 ### 1. Data Table Integration
 
 - Fetch product data from `https://dummyjson.com/products` using **TanStack Query**.
-- Display the data in the existing table (data-table) component.
+- Use the existing DataTable component located in `src//components/table/data-table.tsx` to display the data.
+- You should only pass data and configuration (columns, rows, etc.) as props — do not modify the internal implementation of this component.
 
 ### 2. Pagination
 
@@ -20,7 +21,7 @@ Enhance the existing Next.js boilerplate by integrating the [DummyJSON Products 
 
 ### 3. Sorting
 
-- Enable sorting of products on the table based on fields like `title`, `price`, and `rating`.
+- Enable client-side sorting of products on the table based on fields like `title`, `price`, and `rating`.
 - Implement both ascending and descending order sorting.
 
 ### 4. CRUD Functionality
@@ -56,6 +57,15 @@ Enhance the existing Next.js boilerplate by integrating the [DummyJSON Products 
     - `/products`: “All Products – MyShop”
     - `/products/12`: “iPhone 9 – MyShop”
 
+### Bonus (Optional)
+If you complete the core functionality early and want to take your submission further, consider implementing one or more of the following enhancements:
+
+- **Search:** Add a client-side debounced search feature to allow users to filter products by title or brand.
+- **Optimistic Updates:** Use TanStack Query's `onMutate` and `onSuccess` callbacks to implement optimistic updates for create, update, or delete operations.
+- **Skeleton Loaders:** Display skeleton screens or shimmer effects while the data is being fetched, especially on slower networks.
+
+These extras are not required, but they will help your submission stand out and demonstrate attention to detail.
+
 ---
 
 ## Form Validation with Zod
@@ -88,10 +98,11 @@ Integrate this schema with `react-hook-form` to validate form inputs and display
 
 ## Submission Guidelines
 
-1. **Fork the Repository.**
-2. **Make Your Changes**
-3. **Push Changes and Create a Pull Request** :
+1. **Clone the base repository**  
+   URL: `https://github.com/QarbonaAI/fe-task`
+2. **Create a private GitHub repository** under your own account.
+4. Add the following GitHub username(s) as collaborators:
+   - `aditansh`, `AchintyaQarbona`, `siddharth1825`, `abhitrueprogrammer`
+5. Submit the **private repository link** as part of your application.
 
-* Ensure the base repository is `QarbonaAI/fe-task` and the base branch is `main`.
-* Set the title of the pull request to your  **full name** .
-* Provide a brief description of the changes you've made.
+* Don't make the repository public at any time. This ensures fairness and prevents plagiarism.
