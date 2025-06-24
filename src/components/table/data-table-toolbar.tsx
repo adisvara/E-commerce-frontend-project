@@ -1,38 +1,57 @@
-"use client";
+"use client"
 
-import React from "react";
-import { type ColumnFiltersState, type Table } from "@tanstack/react-table";
+import { type Table } from "@tanstack/react-table"
+import { X } from "lucide-react"
 
-import { DataTableViewOptions } from "./data-table-view-options";
-import { Input } from "../ui/input";
+import { Button } from "../ui/button"
+import { Input } from "../ui/input"
+import { DataTableViewOptions } from "./data-table-view-options"
+
+interface FilterOption {
+  columnId: string;
+  title: string;
+  options: {
+    label: string;
+    value: string;
+    icon?: React.ComponentType<{ className?: string }>;
+  }[];
+}
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
-  columnFilters: ColumnFiltersState;
-  setColumnFilters: React.Dispatch<React.SetStateAction<ColumnFiltersState>>;
+  filters?: FilterOption[];
 }
 
 export function DataTableToolbar<TData>({
   table,
-  filter,
-}: DataTableToolbarProps<TData> & { filter: React.ReactNode }) {
-  const [searchTerm, setSearchTerm] = React.useState<string>("");
+  filters = [],
+}: DataTableToolbarProps<TData>) {
+  const isFiltered = table.getState().columnFilters.length > 0
 
   return (
-    <div className="flex items-center justify-between gap-2">
+    <div className="flex items-center justify-between">
       <div className="flex flex-1 items-center space-x-2">
-        <div className="relative w-full">
-          <Input
-            placeholder="Search"
-            value={searchTerm}
-            onChange={(event) => setSearchTerm(event.target.value)}
-            className="h-8 w-full rounded-[8px] border-[1px] pl-8"
-            style={{ boxShadow: "0px 1px 2px 0px #00000014" }}
-          />
-        </div>
+        <Input
+          placeholder="Filter tasks..."
+          value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
+          onChange={(event) =>
+            table.getColumn("title")?.setFilterValue(event.target.value)
+          }
+          className="h-8 w-[150px] lg:w-[250px]"
+        />
+
+        {isFiltered && (
+          <Button
+            variant="ghost"
+            onClick={() => table.resetColumnFilters()}
+            className="h-8 px-2 lg:px-3"
+          >
+            Reset
+            <X className="ml-1 h-4 w-4" />
+          </Button>
+        )}
       </div>
-      {filter}
       <DataTableViewOptions table={table} />
     </div>
-  );
+  )
 }
