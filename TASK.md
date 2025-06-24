@@ -11,7 +11,7 @@ Enhance the existing Next.js boilerplate by integrating the [DummyJSON Products 
 ### 1. Data Table Integration
 
 - Fetch product data from `https://dummyjson.com/products` using **TanStack Query**.
-- Either use the existing DataTable component located in `src/components/table/data-table.tsx` to display the data, or install tanstack table (https://tanstack.com/table)
+- Use the existing DataTable component located in `src/components/table/data-table.tsx` to display the data.
 - You should only pass data and configuration (columns, rows, etc.) as props — do not modify the internal implementation of this component.
 
 ### 2. Pagination
@@ -63,7 +63,7 @@ If you complete the core functionality early and want to take your submission fu
 - **Search:** Add a client-side debounced search feature to allow users to filter products by title or brand.
 - **Optimistic Updates:** Use TanStack Query's `onMutate` and `onSuccess` callbacks to implement optimistic updates for create, update, or delete operations.
 - **Skeleton Loaders:** Display skeleton screens or shimmer effects while the data is being fetched, especially on slower networks.
-- **Extras:** Feel free to use libraries such as zustand, shadCN 
+- **Extras:** Feel free to use libraries such as zustand, shadCN or framer-motion if it enhances your project.
 These extras are not required, but they will help your submission stand out and demonstrate attention to detail.
 
 ---
