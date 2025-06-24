@@ -1,20 +1,20 @@
-import { type Column } from "@tanstack/react-table";
+import { type Column } from "@tanstack/react-table"
+import { ArrowDown, ArrowUp, ChevronsUpDown, EyeOff } from "lucide-react"
 
-import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils"
+import { Button } from "../ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { cn } from "@/lib/utils";
-import { ChevronDown, ChevronsUpDown, ChevronUp, EyeOff } from "lucide-react";
+} from "../ui/dropdown-menu"
 
 interface DataTableColumnHeaderProps<TData, TValue>
   extends React.HTMLAttributes<HTMLDivElement> {
-  column: Column<TData, TValue>;
-  title: string;
+  column: Column<TData, TValue>
+  title: string
 }
 
 export function DataTableColumnHeader<TData, TValue>({
@@ -23,7 +23,7 @@ export function DataTableColumnHeader<TData, TValue>({
   className,
 }: DataTableColumnHeaderProps<TData, TValue>) {
   if (!column.getCanSort()) {
-    return <div className={cn("text-xs", className)}>{title}</div>;
+    return <div className={cn(className)}>{title}</div>
   }
 
   return (
@@ -33,34 +33,34 @@ export function DataTableColumnHeader<TData, TValue>({
           <Button
             variant="ghost"
             size="sm"
-            className="data-[state=open]:bg-accent -ml-3 h-8"
+            className="-ml-3 h-8 data-[state=open]:bg-accent"
           >
             <span>{title}</span>
             {column.getIsSorted() === "desc" ? (
-              <ChevronDown className="ml-2 h-4 w-4" />
+              <ArrowDown />
             ) : column.getIsSorted() === "asc" ? (
-              <ChevronUp className="ml-2 h-4 w-4" />
+              <ArrowUp />
             ) : (
-              <ChevronsUpDown className="ml-2 h-4 w-4" />
+              <ChevronsUpDown />
             )}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">
           <DropdownMenuItem onClick={() => column.toggleSorting(false)}>
-            <ChevronUp className="text-muted-foreground/70 mr-2 h-3.5 w-3.5" />
+            <ArrowUp className="h-3.5 w-3.5 text-muted-foreground/70" />
             Asc
           </DropdownMenuItem>
           <DropdownMenuItem onClick={() => column.toggleSorting(true)}>
-            <ChevronDown className="text-muted-foreground/70 mr-2 h-3.5 w-3.5" />
+            <ArrowDown className="h-3.5 w-3.5 text-muted-foreground/70" />
             Desc
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => column.toggleVisibility(false)}>
-            <EyeOff className="text-muted-foreground/70 mr-2 h-3.5 w-3.5" />
+            <EyeOff className="h-3.5 w-3.5 text-muted-foreground/70" />
             Hide
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </div>
-  );
+  )
 }
