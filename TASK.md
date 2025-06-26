@@ -105,4 +105,5 @@ Integrate this schema with `react-hook-form` to validate form inputs and display
    - `aditansh`, `AchintyaQarbona`, `siddharth1825`, `abhitrueprogrammer`
 5. Submit the **private repository link** as part of your application.
 
+* Make sure to add your full name in the README of the private repo you create.
 * Don't make the repository public at any time. This ensures fairness and prevents plagiarism.
