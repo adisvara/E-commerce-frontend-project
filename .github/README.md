@@ -1,3 +1,1 @@
-Shivam Kumar
-
 ../TASK.md
