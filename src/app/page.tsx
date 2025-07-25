@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar";
 import { ScrollArea } from "@radix-ui/react-scroll-area";
-import {ProductsTable} from '../features/products/components/products-table'
+import {ProductsTable} from '@/features/products/components/products-table'
 //import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 export default function HomePage() {

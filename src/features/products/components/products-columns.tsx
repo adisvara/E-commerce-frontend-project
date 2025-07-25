@@ -1,5 +1,8 @@
 'use client';
-import type { ColumnDef, CellContext } from '@tanstack/react-table';
+
+import type { ColumnDef } from '@tanstack/react-table';
+
+import { DataTableColumnHeader } from '@/components/table/data-table-column-header';
 
 export interface Product {
   id: number;
@@ -37,139 +40,194 @@ export interface Product {
 export const columns: ColumnDef<Product, any>[] = [
   {
     accessorKey: 'id',
-    header: 'ID',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="ID" />
+    ),
     size: 50,
+    enableSorting: false,
   },
   {
     accessorKey: 'thumbnail',
     header: 'Image',
-    cell: (info: CellContext<Product, string>) => (
+    cell: (info) => (
       <img
-        src={info.getValue()}
+        src={info.getValue() as string}
         alt={info.row.original.title}
         style={{ width: 50, height: 50, objectFit: 'contain' }}
       />
     ),
     size: 60,
+    enableSorting: false,
   },
   {
     accessorKey: 'title',
-    header: 'Product Title',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Product Title" />
+    ),
   },
   {
     accessorKey: 'description',
     header: 'Description',
-    cell: (info: CellContext<Product, string>) => (
-      <div className="max-w-[300px] truncate" title={info.getValue()}>
-        {info.getValue()}
+    cell: (info) => (
+      <div className="max-w-[300px] truncate" title={info.getValue() as string}>
+        {info.getValue() as string}
       </div>
     ),
+    enableSorting: false,
   },
   {
     accessorKey: 'price',
-    header: 'Price ($)',
-    cell: (info: CellContext<Product, number>) => `$${info.getValue().toFixed(2)}`,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Price" />
+    ),
+    cell: (info) => `$${(info.getValue() as number).toFixed(2)}`,
   },
   {
     accessorKey: 'discountPercentage',
-    header: 'Discount (%)',
-    cell: (info: CellContext<Product, number>) => `${info.getValue().toFixed(2)}%`,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Discount" />
+    ),
+    cell: (info) => `${(info.getValue() as number).toFixed(2)}%`,
+    enableSorting: false,
   },
   {
     accessorKey: 'rating',
-    header: 'Rating',
-    cell: (info: CellContext<Product, number>) => (
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Rating" />
+    ),
+    cell: (info) => (
       <div className="flex items-center gap-1">
-        <span>{info.getValue().toFixed(1)}</span>
-        <span className={`text-sm ${
-          info.getValue() >= 4 ? 'text-green-500' : 
-          info.getValue() >= 3 ? 'text-yellow-500' : 
-          'text-red-500'
-        }`}>★</span>
+        <span>{(info.getValue() as number).toFixed(1)}</span>
+        <span
+          className={`text-sm ${
+            (info.getValue() as number) >= 4
+              ? 'text-green-500'
+              : (info.getValue() as number) >= 3
+                ? 'text-yellow-500'
+                : 'text-red-500'
+          }`}
+        >
+          ★
+        </span>
       </div>
     ),
   },
   {
     accessorKey: 'stock',
-    header: 'Stock',
-    cell: (info: CellContext<Product, number>) => (
-      <span className={`px-2 py-1 rounded-full text-sm ${
-        info.getValue() > 50 ? 'bg-green-100 text-green-800' : 
-        info.getValue() > 20 ? 'bg-yellow-100 text-yellow-800' : 
-        'bg-red-100 text-red-800'
-      }`}>
-        {info.getValue()}
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Stock" />
+    ),
+    cell: (info) => (
+      <span
+        className={`px-2 py-1 rounded-full text-sm ${
+          (info.getValue() as number) > 50
+            ? 'bg-green-100 text-green-800'
+            : (info.getValue() as number) > 20
+              ? 'bg-yellow-100 text-yellow-800'
+              : 'bg-red-100 text-red-800'
+        }`}
+      >
+        {info.getValue() as number}
       </span>
     ),
+    enableSorting: false,
   },
   {
     accessorKey: 'tags',
     header: 'Tags',
-    cell: (info: CellContext<Product, string[]>) => (
+    cell: (info) => (
       <div className="flex gap-1 flex-wrap">
-        {info.getValue()?.map((tag: string) => (
-          <span key={tag} className="px-2 py-1 bg-gray-100 rounded-full text-xs text-black">
+        {(info.getValue() as string[]).map((tag: string) => (
+          <span
+            key={tag}
+            className="px-2 py-1 bg-gray-100 rounded-full text-xs text-black"
+          >
             {tag}
           </span>
         ))}
       </div>
     ),
+    enableSorting: false,
   },
   {
     accessorKey: 'category',
-    header: 'Category',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Category" />
+    ),
+    enableSorting: false,
   },
   {
     accessorKey: 'brand',
-    header: 'Brand',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Brand" />
+    ),
+    enableSorting: false,
   },
   {
     accessorKey: 'weight',
-    header: 'Weight (g)',
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Weight (g)" />
+    ),
+    enableSorting: false,
   },
   {
     accessorKey: 'dimensions',
     header: 'Dimensions',
-    cell: (info: CellContext<Product, Product['dimensions']>) => {
-      const dim = info.getValue();
+    cell: (info) => {
+      const dim = info.getValue() as {
+        width: number;
+        height: number;
+        depth: number;
+      };
       return dim ? `${dim.width}×${dim.height}×${dim.depth} cm` : '-';
     },
+    enableSorting: false,
   },
   {
     accessorKey: 'sku',
     header: 'SKU',
+    enableSorting: false,
   },
   {
     accessorKey: 'warrantyInformation',
     header: 'Warranty',
+    enableSorting: false,
   },
   {
     accessorKey: 'shippingInformation',
     header: 'Shipping',
+    enableSorting: false,
   },
   {
     accessorKey: 'availabilityStatus',
     header: 'Availability',
-    cell: (info: CellContext<Product, string>) => (
-      <span className={`px-2 py-1 rounded-full text-sm ${
-        info.getValue() === 'In Stock' ? 'bg-green-100 text-green-800' : 
-        'bg-red-100 text-red-800'
-      }`}>
-        {info.getValue()}
+    cell: (info) => (
+      <span
+        className={`px-2 py-1 rounded-full text-sm ${
+          info.getValue() === 'In Stock'
+            ? 'bg-green-100 text-green-800'
+            : 'bg-red-100 text-red-800'
+        }`}
+      >
+        {info.getValue() as string}
       </span>
     ),
+    enableSorting: false,
   },
   {
     accessorKey: 'returnPolicy',
     header: 'Return Policy',
+    enableSorting: false,
   },
   {
     accessorKey: 'minimumOrderQuantity',
-    header: 'Min Order Qty',
+    header: 'Min. Order',
+    enableSorting: false,
   },
   {
     accessorKey: 'meta.updatedAt',
     header: 'Last Updated',
-    cell: (info: CellContext<Product, string>) => new Date(info.getValue()).toLocaleDateString(),
+    cell: (info) => new Date(info.getValue() as string).toLocaleDateString(),
+    enableSorting: false,
   },
-]
+];

@@ -1,11 +1,12 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
-import { DataTable } from "@/components/table/data-table";
+import type { SortingState } from '@tanstack/react-table';
+import React, { useEffect, useState } from 'react';
 
-import { columns } from './products-columns';
+import { DataTable } from '@/components/table/data-table';
 import { usePaginationStore } from '@/store/pagination';
+import { columns } from '@/features/products/components/products-columns';
 
 async function getProducts(skip: number, limit: number) {
   const response = await fetch(
@@ -18,9 +19,10 @@ async function getProducts(skip: number, limit: number) {
 export function ProductsTable() {
   const { pagination, setTotalCount } = usePaginationStore();
   const { pageIndex, pageSize } = pagination;
+  const [sorting, setSorting] = useState<SortingState>([]);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['products', pageIndex, pageSize],
+  const { data, isLoading,error } = useQuery({
+    queryKey: ['products', pageIndex, pageSize, sorting],
     queryFn: () => getProducts(pageIndex * pageSize, pageSize),
   });
 
@@ -44,6 +46,5 @@ export function ProductsTable() {
       columns={columns}
       data={data?.products || []}
     />
-    
   );
 }
