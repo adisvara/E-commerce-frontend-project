@@ -1,12 +1,9 @@
 import QueryProvider from "@/lib/query-provider";
 import "@/styles/globals.css";
-
-import "react-toastify/dist/ReactToastify.css";
-
 import { type Metadata } from "next";
 import { Geist } from "next/font/google";
-import { ToastContainer } from "react-toastify";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "FE task QuarbonaAI",
@@ -32,7 +29,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <QueryProvider>
-            <ToastContainer />
+            <Toaster />
             <div className="h-screen max-h-screen overflow-hidden">
               {children}
             </div>
