@@ -3,18 +3,12 @@
 import { useQuery } from '@tanstack/react-query';
 import type { SortingState } from '@tanstack/react-table';
 import React, { useEffect, useState } from 'react';
-
 import { DataTable } from '@/components/table/data-table';
 import { usePaginationStore } from '@/store/pagination';
 import { columns } from '@/features/products/components/products-columns';
-
-async function getProducts(skip: number, limit: number) {
-  const response = await fetch(
-    `https://dummyjson.com/products?skip=${skip}&limit=${limit}`,
-  );
-  const data = await response.json();
-  return data;
-}
+import { AddProductForm } from './add-product-form';
+import { EditProductForm } from './edit-product-form';
+import { getProducts } from '@/features/products/api';
 
 export function ProductsTable() {
   const { pagination, setTotalCount } = usePaginationStore();
@@ -42,9 +36,16 @@ export function ProductsTable() {
   }
 
   return (
-    <DataTable
-      columns={columns}
-      data={data?.products || []}
-    />
+    <div>
+      <DataTable
+        columns={columns}
+        data={data?.products || []}
+      />
+      <EditProductForm />
+      <div className="m-4">
+        <h2 className="text-2xl font-bold m-2">Add New Product</h2>
+        <AddProductForm />
+      </div>
+    </div>
   );
 }

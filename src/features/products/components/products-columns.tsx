@@ -1,8 +1,9 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
-
 import { DataTableColumnHeader } from '@/components/table/data-table-column-header';
+import { ProductTableRowActions } from '@/features/products/components/product-table-row-actions';
+import Link from 'next/link';
 
 export interface Product {
   id: number;
@@ -64,6 +65,11 @@ export const columns: ColumnDef<Product, any>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Product Title" />
     ),
+    cell: (info) => (
+      <Link href={`/products/${info.row.original.id}`} className="hover:underline">
+      {info.getValue() as string}
+      </Link>
+    ),
   },
   {
     accessorKey: 'description',
@@ -80,7 +86,7 @@ export const columns: ColumnDef<Product, any>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Price" />
     ),
-    cell: (info) => `$${(info.getValue() as number).toFixed(2)}`,
+    cell: (info) => `${(info.getValue() as number).toFixed(2)}`,
   },
   {
     accessorKey: 'discountPercentage',
@@ -135,18 +141,24 @@ export const columns: ColumnDef<Product, any>[] = [
   {
     accessorKey: 'tags',
     header: 'Tags',
-    cell: (info) => (
-      <div className="flex gap-1 flex-wrap">
-        {(info.getValue() as string[]).map((tag: string) => (
-          <span
-            key={tag}
-            className="px-2 py-1 bg-gray-100 rounded-full text-xs text-black"
-          >
-            {tag}
-          </span>
-        ))}
-      </div>
-    ),
+    cell: (info) => {
+      const tags = info.getValue() as string[] | undefined;
+      if (!tags || !Array.isArray(tags)) {
+        return <span className="text-gray-400">No tags</span>;
+      }
+      return (
+        <div className="flex gap-1 flex-wrap">
+          {tags.map((tag: string) => (
+            <span
+              key={tag}
+              className="px-2 py-1 bg-gray-100 rounded-full text-xs text-black"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      );
+    },
     enableSorting: false,
   },
   {
@@ -229,5 +241,9 @@ export const columns: ColumnDef<Product, any>[] = [
     header: 'Last Updated',
     cell: (info) => new Date(info.getValue() as string).toLocaleDateString(),
     enableSorting: false,
+  },
+  {
+    id: 'actions',
+    cell: ({ row }) => <ProductTableRowActions product={row.original} />,
   },
 ];
