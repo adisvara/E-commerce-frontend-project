@@ -9,13 +9,14 @@ import { columns } from '@/features/products/components/products-columns';
 import { AddProductForm } from './add-product-form';
 import { EditProductForm } from './edit-product-form';
 import { getProducts } from '@/features/products/api';
+import { type ProductsResponse } from '@/features/products/types';
 
 export function ProductsTable() {
   const { pagination, setTotalCount } = usePaginationStore();
   const { pageIndex, pageSize } = pagination;
-  const [sorting, setSorting] = useState<SortingState>([]);
+  const [sorting] = useState<SortingState>([]);
 
-  const { data, isLoading,error } = useQuery({
+  const { data, isLoading, error } = useQuery<ProductsResponse>({
     queryKey: ['products', pageIndex, pageSize, sorting],
     queryFn: () => getProducts(pageIndex * pageSize, pageSize),
   });
@@ -24,14 +25,14 @@ export function ProductsTable() {
     if (data) {
       setTotalCount(data.total);
     }
-  }, [data]);
+  }, [data, setTotalCount]);
 
   if (isLoading) {
     return <div>Loading...</div>;
   }
   if (error) {
     return <div>
-          Error: {(error as Error).message}
+          Error: {error.message}
       </div>;
   }
 
@@ -39,7 +40,7 @@ export function ProductsTable() {
     <div>
       <DataTable
         columns={columns}
-        data={data?.products || []}
+        data={data?.products ?? []}
       />
       <EditProductForm />
       <div className="m-4">

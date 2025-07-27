@@ -1,9 +1,9 @@
 import { type Metadata } from 'next';
-import { type Product } from '@/features/products/components/products-columns';
+import { type Product } from '@/features/products/types';
 
 async function getProduct(id: string): Promise<Product> {
   const res = await fetch(`https://dummyjson.com/products/${id}`);
-  const data = await res.json();
+  const data = await res.json() as Product;
   return data;
 }
 

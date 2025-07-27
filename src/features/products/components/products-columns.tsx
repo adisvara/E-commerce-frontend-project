@@ -1,44 +1,15 @@
 'use client';
 
 import type { ColumnDef } from '@tanstack/react-table';
+import { type Product } from '@/features/products/types';
 import { DataTableColumnHeader } from '@/components/table/data-table-column-header';
 import { ProductTableRowActions } from '@/features/products/components/product-table-row-actions';
 import Link from 'next/link';
+import Image from 'next/image';
 
-export interface Product {
-  id: number;
-  title: string;
-  description: string;
-  category: string;
-  price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  tags: string[];
-  brand: string;
-  sku: string;
-  weight: number;
-  dimensions: {
-    width: number;
-    height: number;
-    depth: number;
-  };
-  warrantyInformation: string;
-  shippingInformation: string;
-  availabilityStatus: string;
-  returnPolicy: string;
-  minimumOrderQuantity: number;
-  meta: {
-    createdAt: string;
-    updatedAt: string;
-    barcode: string;
-    qrCode: string;
-  };
-  images: string[];
-  thumbnail: string;
-}
 
-export const columns: ColumnDef<Product, any>[] = [
+
+export const columns: ColumnDef<Product, unknown>[] = [
   {
     accessorKey: 'id',
     header: ({ column }) => (
@@ -51,10 +22,12 @@ export const columns: ColumnDef<Product, any>[] = [
     accessorKey: 'thumbnail',
     header: 'Image',
     cell: (info) => (
-      <img
+      <Image
         src={info.getValue() as string}
         alt={info.row.original.title}
-        style={{ width: 50, height: 50, objectFit: 'contain' }}
+        width={50}
+        height={50}
+        style={{ objectFit: 'contain' }} 
       />
     ),
     size: 60,

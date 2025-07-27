@@ -1,12 +1,8 @@
 import axios, { type AxiosError, type InternalAxiosRequestConfig } from "axios";
-import { toast } from "react-toastify";
 
 import { handleAPIError } from "@/lib/errors";
 
-// Extend AxiosRequestConfig to include the _retry property
-interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
-  _retry?: boolean;
-}
+
 
 const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_HOST_URL}`,
@@ -14,7 +10,7 @@ const api = axios.create({
 
 // Add a request interceptor
 api.interceptors.request.use(
-  (config: CustomAxiosRequestConfig) => {
+  (config: InternalAxiosRequestConfig) => {
     const token = localStorage.getItem("token");
     config.headers.Authorization = `Bearer ${token}`;
     // config.headers["ngrok-skip-browser-warning"] = "69420";
@@ -29,7 +25,7 @@ api.interceptors.response.use(
   (response) => response,
   async (err) => {
     const error = err as AxiosError;
-    const originalRequest = error.config as CustomAxiosRequestConfig;
+    // const originalRequest = error.config as CustomAxiosRequestConfig;
 
     // If the error status is 401 and there is no originalRequest._retry flag,
     // it means the token has expired and we need to refresh it

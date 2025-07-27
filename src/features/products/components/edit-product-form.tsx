@@ -5,8 +5,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import { z } from 'zod';
-import React, { useEffect, useState } from 'react';
-import type { SortingState } from '@tanstack/react-table';
+import React, { useEffect } from 'react';
+
 
 import { Button } from '@/components/ui/button';
 import {
@@ -28,7 +28,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { updateProduct } from '@/features/products/api';
 import { useProductModal } from '@/store/useProductModel';
-import type { Product } from '@/features/products/components/products-columns';
+import { type ProductsResponse } from '@/features/products/types';
 import { usePaginationStore } from '@/store/pagination';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
@@ -71,14 +71,14 @@ export function EditProductForm() {
   const { isOpen, product, close } = useProductModal();
   const { pagination } = usePaginationStore();
   const { pageIndex, pageSize } = pagination;
-  const [sorting] = useState<SortingState>([]);
+  
 
   const form = useForm<ProductFormValues>({
     resolver: zodResolver(productSchema),
     defaultValues: {
-      title: product?.title || '',
-      description: product?.description || '',
-      price: product?.price || 0,
+      title: product?.title ?? '',
+      description: product?.description ?? '',
+      price: product?.price ?? 0,
     },
   });
 
@@ -93,19 +93,19 @@ export function EditProductForm() {
         discountPercentage: product.discountPercentage,
         rating: product.rating,
         stock: product.stock,
-        tags: product.tags || [],
+        tags: product.tags ?? [],
         brand: product.brand,
         sku: product.sku,
         weight: product.weight,
         dimensions: product.dimensions,
-        warrantyInformation: product.warrantyInformation || '',
-        shippingInformation: product.shippingInformation || '',
-        availabilityStatus: product.availabilityStatus || '',
-        returnPolicy: product.returnPolicy || '',
+        warrantyInformation: product.warrantyInformation ?? '',
+        shippingInformation: product.shippingInformation ?? '',
+        availabilityStatus: product.availabilityStatus ?? '',
+        returnPolicy: product.returnPolicy ?? '',
         minimumOrderQuantity: product.minimumOrderQuantity,
-        meta: product.meta || {},
-        images: product.images || [],
-        thumbnail: product.thumbnail || '',
+        meta: product.meta ?? {},
+        images: product.images ?? [],
+        thumbnail: product.thumbnail ?? '',
       });
     }
   }, [product, form]);
@@ -113,11 +113,11 @@ export function EditProductForm() {
   const mutation = useMutation({
     mutationFn: (values: ProductFormValues) => updateProduct(product!.id, values),
     onSuccess: (updatedFields) => {
-      queryClient.setQueryData(['products', pageIndex, pageSize, sorting], (old: any) => {
+      queryClient.setQueryData<ProductsResponse>(['products', pageIndex, pageSize, []], (old) => {
         if (!old) return old;
         return {
           ...old,
-          products: old.products.map((p: Product) =>
+          products: old.products.map((p) =>
             p.id === product!.id ? { ...p, ...updatedFields } : p
           ),
         };
@@ -128,7 +128,7 @@ export function EditProductForm() {
       });
       close();
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast.error('Error updating product', {
         description: error.message,
       });
@@ -187,7 +187,7 @@ export function EditProductForm() {
                 <FormItem>
                   <FormLabel>Price</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Product price" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Product price" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -196,7 +196,7 @@ export function EditProductForm() {
                 <FormItem>
                   <FormLabel>Discount Percentage</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Discount %" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Discount %" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -205,7 +205,7 @@ export function EditProductForm() {
                 <FormItem>
                   <FormLabel>Rating</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Rating" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Rating" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -214,7 +214,7 @@ export function EditProductForm() {
                 <FormItem>
                   <FormLabel>Stock</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Stock" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Stock" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -223,7 +223,7 @@ export function EditProductForm() {
                 <FormItem>
                   <FormLabel>Tags (comma separated)</FormLabel>
                   <FormControl>
-                    <Input placeholder="tag1,tag2,tag3" value={field.value?.join(',') || ''} onChange={e => field.onChange(e.target.value.split(',').map(tag => tag.trim()).filter(Boolean))} />
+                    <Input placeholder="tag1, tag2, tag3" value={field.value?.join(', ') ?? ''} onChange={e => field.onChange(e.target.value.split(',').map(tag => tag.trim()).filter(Boolean))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -250,7 +250,7 @@ export function EditProductForm() {
                 <FormItem>
                   <FormLabel>Weight (g)</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Weight" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Weight" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -261,7 +261,7 @@ export function EditProductForm() {
                   <FormItem>
                     <FormLabel>Width</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="Width" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" placeholder="Width" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -270,7 +270,7 @@ export function EditProductForm() {
                   <FormItem>
                     <FormLabel>Height</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="Height" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" placeholder="Height" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -279,7 +279,7 @@ export function EditProductForm() {
                   <FormItem>
                     <FormLabel>Depth</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="Depth" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" placeholder="Depth" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -325,7 +325,7 @@ export function EditProductForm() {
                 <FormItem>
                   <FormLabel>Minimum Order Quantity</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Minimum Order Quantity" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Minimum Order Quantity" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -373,7 +373,7 @@ export function EditProductForm() {
                 <FormItem>
                   <FormLabel>Images (comma separated URLs)</FormLabel>
                   <FormControl>
-                    <Input placeholder="url1,url2,url3" value={field.value?.join(',') || ''} onChange={e => field.onChange(e.target.value.split(',').map(url => url.trim()).filter(Boolean))} />
+                    <Input placeholder="url1, url2, url3" value={field.value?.join(', ') ?? ''} onChange={e => field.onChange(e.target.value.split(',').map(url => url.trim()).filter(Boolean))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

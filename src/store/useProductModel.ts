@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { Product } from '@/features/products/components/products-columns';
+import type { Product } from '@/features/products/types';
 
 interface ProductModalState {
   isOpen: boolean;

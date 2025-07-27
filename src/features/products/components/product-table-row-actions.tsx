@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { DataTableRowActions } from '@/components/table/data-table-row-actions';
 import { deleteProduct } from '@/features/products/api';
 import { useProductModal } from '@/store/useProductModel';
-import type { Product } from './products-columns';
+import type { Product, ProductsResponse } from '@/features/products/types';
 import { toast } from 'sonner';
 import { usePaginationStore } from '@/store/pagination';
 
@@ -17,7 +17,7 @@ export function ProductTableRowActions({ product }: { product: Product }) {
   const deleteMutation = useMutation({
     mutationFn: deleteProduct,
     onSuccess: (_, id) => {
-      queryClient.setQueryData(['products', pageIndex, pageSize, []], (old: any) => {
+      queryClient.setQueryData<ProductsResponse>(['products', pageIndex, pageSize, []], (old) => {
         if (!old) return old;
         return {
           ...old,

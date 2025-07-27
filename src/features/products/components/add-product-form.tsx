@@ -26,6 +26,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { toast } from "sonner"
 import { addProduct } from '@/features/products/api';
+import { type Product, type ProductsResponse } from '../types';
 import { usePaginationStore } from '@/store/pagination';
 
 const productSchema = z.object({
@@ -78,8 +79,8 @@ export function AddProductForm() {
 
   const mutation = useMutation({
     mutationFn: addProduct,
-    onSuccess: (newProduct) => {
-      queryClient.setQueryData(['products', pageIndex, pageSize, []], (old: any) => {
+    onSuccess: (newProduct: Product) => {
+      queryClient.setQueryData<ProductsResponse>(['products', pageIndex, pageSize, []], (old) => {
         if (!old) return old;
         return {
           ...old,
@@ -93,7 +94,7 @@ export function AddProductForm() {
       });
       form.reset();
     },
-    onError: (error) => {
+    onError: (error: Error) => {
       toast.error('Error adding product', {
         description: error.message,
       });
@@ -148,7 +149,7 @@ export function AddProductForm() {
                 <FormItem>
                   <FormLabel>Price</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Product price" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Product price" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -157,7 +158,7 @@ export function AddProductForm() {
                 <FormItem>
                   <FormLabel>Discount Percentage</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Discount %" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Discount %" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -166,7 +167,7 @@ export function AddProductForm() {
                 <FormItem>
                   <FormLabel>Rating</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Rating" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Rating" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -175,7 +176,7 @@ export function AddProductForm() {
                 <FormItem>
                   <FormLabel>Stock</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Stock" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Stock" {...field} onChange={e => field.onChange(parseInt(e.target.value, 10))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -184,7 +185,7 @@ export function AddProductForm() {
                 <FormItem>
                   <FormLabel>Tags (comma separated)</FormLabel>
                   <FormControl>
-                    <Input placeholder="tag1,tag2,tag3" value={field.value?.join(',') || ''} onChange={e => field.onChange(e.target.value.split(',').map(tag => tag.trim()).filter(Boolean))} />
+                    <Input placeholder="tag1, tag2, tag3" value={field.value?.join(', ') ?? ''} onChange={e => field.onChange(e.target.value.split(',').map(tag => tag.trim()).filter(Boolean))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -211,7 +212,7 @@ export function AddProductForm() {
                 <FormItem>
                   <FormLabel>Weight (g)</FormLabel>
                   <FormControl>
-                    <Input type="number" placeholder="Weight" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                    <Input type="number" placeholder="Weight" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -222,7 +223,7 @@ export function AddProductForm() {
                   <FormItem>
                     <FormLabel>Width</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="Width" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" placeholder="Width" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -231,7 +232,7 @@ export function AddProductForm() {
                   <FormItem>
                     <FormLabel>Height</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="Height" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" placeholder="Height" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -240,7 +241,7 @@ export function AddProductForm() {
                   <FormItem>
                     <FormLabel>Depth</FormLabel>
                     <FormControl>
-                      <Input type="number" placeholder="Depth" {...field} onChange={e => field.onChange(e.target.valueAsNumber)} />
+                      <Input type="number" placeholder="Depth" {...field} onChange={e => field.onChange(parseFloat(e.target.value))} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -334,7 +335,7 @@ export function AddProductForm() {
                 <FormItem>
                   <FormLabel>Images (comma separated URLs)</FormLabel>
                   <FormControl>
-                    <Input placeholder="url1,url2,url3" value={field.value?.join(',') || ''} onChange={e => field.onChange(e.target.value.split(',').map(url => url.trim()).filter(Boolean))} />
+                    <Input placeholder="url1, url2, url3" value={field.value?.join(', ') ?? ''} onChange={e => field.onChange(e.target.value.split(',').map(url => url.trim()).filter(Boolean))} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
