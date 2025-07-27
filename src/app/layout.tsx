@@ -6,8 +6,8 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "FE task QuarbonaAI",
-  description: "fe task for QuarbonaAI",
+  title: "Kharido",
+  description: "Frontend website built on Nextjs boilerplate code",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
